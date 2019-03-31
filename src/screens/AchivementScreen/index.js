@@ -9,6 +9,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import Menu, { MenuItem } from "react-native-material-menu";
 import { themes } from "../../styles";
+import AchievementContainer from "./components/AchievementContainer";
 
 const { height, width } = Dimensions.get("window");
 const styles = theme => ({
@@ -30,7 +31,7 @@ const styles = theme => ({
   divider: {
     backgroundColor: themes[theme].mainText,
     height: 2,
-    width: "35%"
+    width: "25%"
   },
   dividerContainer: {
     flexDirection: "row",
@@ -68,11 +69,15 @@ const styles = theme => ({
     alignSelf: "center",
     marginTop: 40
   },
+  listItem: {
+    fontSize: 26,
+    color: themes[theme].mainText
+  },
   buttonText: {
     color: themes[theme].mainText
   }
 });
-class HistoryScreen extends Component {
+class AchievementScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -94,7 +99,7 @@ class HistoryScreen extends Component {
     const {
       history,
       handleGoBack,
-      handleClearStorage,
+      achievements,
       theme,
       handleToggleDrawer
     } = this.props;
@@ -116,24 +121,24 @@ class HistoryScreen extends Component {
         </View>
         <View style={styles(theme).dividerContainer}>
           <View style={styles(theme).divider} />
-          <Text style={styles(theme).dividerText}>History</Text>
+          <Text style={styles(theme).dividerText}>Achievements</Text>
           <View style={styles(theme).divider} />
         </View>
-        <TouchableOpacity onPress={handleClearStorage}>
-          <Text style={styles(theme).clearText}>Clear</Text>
-        </TouchableOpacity>
-        <ScrollView style={styles(theme).scrollView}>
-          {Object.keys(history)
-            .sort((a, b) => parseInt(a[0]) - parseInt(b[0]))
-            .map((item, idx) => (
-              <Text style={styles(theme).historyText} key={idx}>
-                {Object.values(history).reverse()[idx]}
-              </Text>
-            ))}
+        <ScrollView style={{ height: "50%" }}>
+          {Object.values(JSON.parse(achievements)).map(item => {
+            console.log("item: ", item);
+            return (
+              <AchievementContainer
+                theme={theme}
+                key={item}
+                achievementName={item}
+              />
+            );
+          })}
         </ScrollView>
       </View>
     );
   }
 }
 
-export default HistoryScreen;
+export default AchievementScreen;

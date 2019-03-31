@@ -68,11 +68,15 @@ const styles = theme => ({
     alignSelf: "center",
     marginTop: 40
   },
+  listItem: {
+    fontSize: 26,
+    color: themes[theme].mainText
+  },
   buttonText: {
     color: themes[theme].mainText
   }
 });
-class HistoryScreen extends Component {
+class ThemeScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -94,7 +98,7 @@ class HistoryScreen extends Component {
     const {
       history,
       handleGoBack,
-      handleClearStorage,
+      handleThemePress,
       theme,
       handleToggleDrawer
     } = this.props;
@@ -116,24 +120,37 @@ class HistoryScreen extends Component {
         </View>
         <View style={styles(theme).dividerContainer}>
           <View style={styles(theme).divider} />
-          <Text style={styles(theme).dividerText}>History</Text>
+          <Text style={styles(theme).dividerText}>Themes</Text>
           <View style={styles(theme).divider} />
         </View>
-        <TouchableOpacity onPress={handleClearStorage}>
-          <Text style={styles(theme).clearText}>Clear</Text>
-        </TouchableOpacity>
         <ScrollView style={styles(theme).scrollView}>
-          {Object.keys(history)
-            .sort((a, b) => parseInt(a[0]) - parseInt(b[0]))
-            .map((item, idx) => (
-              <Text style={styles(theme).historyText} key={idx}>
-                {Object.values(history).reverse()[idx]}
-              </Text>
-            ))}
+          {Object.keys(themes).map((item, idx) => (
+            <TouchableOpacity
+              key={idx}
+              onPress={() => handleThemePress(item)}
+              style={{
+                marginTop: 20,
+                height: 50,
+                borderBottomWidth: 1,
+                borderBottomColor: themes[theme].mainText,
+                flexDirection: "row"
+              }}
+            >
+              <Text style={styles(theme).listItem}>{item}</Text>
+              {theme === item && (
+                <Ionicons
+                  name="md-checkmark"
+                  size={30}
+                  color={themes[theme].mainText}
+                  style={{ marginLeft: 20 }}
+                />
+              )}
+            </TouchableOpacity>
+          ))}
         </ScrollView>
       </View>
     );
   }
 }
 
-export default HistoryScreen;
+export default ThemeScreen;

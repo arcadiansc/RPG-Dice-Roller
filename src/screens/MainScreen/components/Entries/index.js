@@ -1,12 +1,13 @@
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
+import { themes } from "../../../../styles";
 
-const topRow = ["C", 4, 6, 8];
+const topRow = [2, 4, 6, 8];
 const bottomRow = [10, 12, 20, "%"];
-const styles = {
+const styles = theme => ({
   entry: {
     fontSize: 24,
-    color: "white"
+    color: themes[theme].mainText
   },
   container: {
     flexDirection: "column",
@@ -18,11 +19,11 @@ const styles = {
     alignItems: "center",
     marginTop: 40
   }
-};
-const Entries = ({ handleItemPress, currentDice }) => {
+});
+const Entries = ({ handleItemPress, currentDice, theme }) => {
   return (
-    <View style={styles.container}>
-      <View style={styles.row}>
+    <View style={styles(theme).container}>
+      <View style={styles(theme).row}>
         {topRow.map((item, idx) => (
           <TouchableOpacity
             style={{
@@ -30,18 +31,20 @@ const Entries = ({ handleItemPress, currentDice }) => {
               width: 50,
               justifyContent: "center",
               alignItems: "center",
-              borderWidth: currentDice === item ? 2 : null,
-              borderColor: "white",
+              // borderWidth: currentDice === item ? 2 : null,
+              backgroundColor:
+                currentDice === item ? "rgba(216,216,216, 0.2)" : null,
+              borderColor: themes[theme].entryBorder,
               borderRadius: 25
             }}
             onPress={() => handleItemPress(item)}
             key={idx}
           >
-            <Text style={styles.entry}>{item}</Text>
+            <Text style={styles(theme).entry}>{item}</Text>
           </TouchableOpacity>
         ))}
       </View>
-      <View style={styles.row}>
+      <View style={styles(theme).row}>
         {bottomRow.map((item, idx) => (
           <TouchableOpacity
             style={{
@@ -49,14 +52,16 @@ const Entries = ({ handleItemPress, currentDice }) => {
               width: 50,
               justifyContent: "center",
               alignItems: "center",
-              borderWidth: currentDice === item ? 2 : null,
-              borderColor: "white",
+              // borderWidth: currentDice === item ? 2 : null,
+              backgroundColor:
+                currentDice === item ? "rgba(216,216,216, 0.2)" : null,
+              borderColor: themes[theme].entryBorder,
               borderRadius: 25
             }}
             onPress={() => handleItemPress(item)}
             key={idx}
           >
-            <Text style={styles.entry}>{item}</Text>
+            <Text style={styles(theme).entry}>{item}</Text>
           </TouchableOpacity>
         ))}
       </View>

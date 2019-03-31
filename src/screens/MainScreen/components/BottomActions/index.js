@@ -1,20 +1,21 @@
 import React, { Component } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Dimensions } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { themes } from "../../../../styles";
 
-const styles = {
+const height = Dimensions.get("window").height;
+
+const styles = theme => ({
   container: {
     width: "100%",
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
-    paddingLeft: 20,
-    paddingRight: 20
+    alignItems: "center"
   },
   subContainer: {
     flexDirection: "column",
-    width: 50,
-    height: 60,
+    width: 100,
+    height: 40,
     justifyContent: "space-between",
     alignItems: "center"
   },
@@ -22,7 +23,7 @@ const styles = {
     fontSize: 30,
     textAlign: "center"
   }
-};
+});
 class BottomActions extends Component {
   constructor(props) {
     super(props);
@@ -47,11 +48,12 @@ class BottomActions extends Component {
       handleDecreaseDice,
       handleIncreaseAdd,
       handleDecreaseAdd,
-      multiplier
+      multiplier,
+      theme
     } = this.props;
     return (
-      <View style={styles.container}>
-        <View style={styles.subContainer}>
+      <View style={styles(theme).container}>
+        <View style={styles(theme).subContainer}>
           <TouchableOpacity onPress={handleIncreaseDice}>
             <Ionicons
               name="md-arrow-dropup"
@@ -59,7 +61,7 @@ class BottomActions extends Component {
               color={numberOfDice > 2 ? "gray" : "black"}
             />
           </TouchableOpacity>
-          <Text style={styles.actionText}># {numberOfDice}</Text>
+          <Text style={styles(theme).actionText}># {numberOfDice}</Text>
           <TouchableOpacity onPress={handleDecreaseDice}>
             <Ionicons
               name="md-arrow-dropdown"
@@ -68,7 +70,7 @@ class BottomActions extends Component {
             />
           </TouchableOpacity>
         </View>
-        <View style={styles.subContainer}>
+        <View style={styles(theme).subContainer}>
           <TouchableOpacity onPress={handleIncreaseAdd}>
             <Ionicons name="md-arrow-dropup" size={40} color="black" />
           </TouchableOpacity>
